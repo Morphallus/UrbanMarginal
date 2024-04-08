@@ -1,5 +1,7 @@
 package controleur;
+
 import outils.connexion.AsyncResponse;
+
 import outils.connexion.ClientSocket;
 import outils.connexion.Connection;
 import outils.connexion.ServeurSocket;
@@ -21,7 +23,7 @@ public class Controle implements AsyncResponse {
 	/**
 	 * frame EntreeJeu
 	 */
-	private EntreeJeu frmEntreeJeu ;
+	private EntreeJeu frmEntreeJeu;
 	/**
 	 * frame Arene
 	 */
@@ -62,27 +64,32 @@ public class Controle implements AsyncResponse {
 			this.frmEntreeJeu.dispose();
 			this.frmArene = new Arene();
 			this.frmArene.setVisible(true);
-		}
-		else  {
+		} else {
 			this.typeJeu = "client";
 			new ClientSocket(this, info, PORT);
 		}
 	}
+
 	public void reception(Connection connection, String ordre, Object info) {
-		switch(ordre) {
-		case "connexion" :
-			if(this.typeJeu.equals("client")) {
+		switch (ordre) {
+		case "connexion":
+			if (this.typeJeu.equals("client")) {
 				this.frmEntreeJeu.dispose();
 				this.frmArene = new Arene();
 				this.frmChoixJoueur = new ChoixJoueur();
 				this.frmChoixJoueur.setVisible(true);
 			}
 			break;
-		case "réception" :
+		case "réception":
 			break;
-		case "déconnexion" :
+		case "déconnexion":
 			break;
 		}
-		
+
+	}
+	public void evenementChoixJoueur(String pseudo, int numPerso)
+	{
+		this.frmChoixJoueur.dispose();
+		this.frmArene.setVisible(true);
 	}
 }
